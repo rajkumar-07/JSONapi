@@ -1,81 +1,42 @@
-import React from 'react';
-import { useState, useEffect } from 'react'
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
-import {MailOutlined,GlobalOutlined,PhoneOutlined} from '@ant-design/icons'
-import { Card } from 'antd';
-const { Meta } = Card;
+import React, { useEffect, useState } from 'react';
+import Card from "./Components/Card"
+import {Row,Col} from "antd"
+let dynamicURL=""
 
-const SubFunction = (props) => { return (
-  <Card className='Card'
-    style={{
-      width: 250,
-      height: 450
+function imageURL(name){
+  const prefixURL="https://avatars.dicebear.com/v2/avataaars/", suffixUrl=".svg?options[mood][]=happy";
+  return URL=prefixURL+name+suffixUrl;
+}
+function App() {
+  const [users, setUsers] = useState([]);
 
-    }}
-    cover={
-      <img
-        alt="example"
-        src={props.image} 
-      />
-    }
-    actions={[
-      <SettingOutlined key="setting" color="red" />,
-      <EditOutlined key="edit" />,
-      <EllipsisOutlined key="ellipsis" />,
-    ]}
-  >
-    <Meta
-      title={props.name}
-    /><br/> 
-    <GlobalOutlined/>
-    <>{"       "}
-      {props.website}
-    </><br/>
-    <PhoneOutlined/>
-    <>{"       "}
-      {props.number}
-    </><br/>
-    <MailOutlined/>
-    <>{"       "}
-      {props.email}
-    </>
+  useEffect(()=>{
+  async function fetchUsers() {
+    const response = await fetch('https://jsonplaceholder.typicode.com/users');
+    const data = await response.json();
+    setUsers(data);
+  }
+  fetchUsers();
+  },
+ []);
+  return (
     
-  </Card>
-  )}
-function App (){ 
-  const [posts, setPosts] = useState([]);
-
-  const url = "https://jsonplaceholder.typicode.com/users";
-  const string1="https://avatars.dicebear.com/v2/avataaars/";
-  const string2=".svg?options[mood][]=happy"
-  useEffect(() => {
-     fetch(url)
-        .then(res => {
-          if (!res.ok) {
-                return Error("error");
-         }
-         return res.json();
-       })
-      .then(data => setPosts(data));
-     });
-<>
-  </>
-return(
-  <>
-  {posts.map(post => (
-  <SubFunction 
-  image={string1+post.username+string2} 
-  name={post.name} 
-  email={post.email} 
-  number={post.phone}
-  website={post.website}
-
-  />
-  ))}
-  </>
+    <div>
+       <Row gutter={[24, 24]}>
+        {users.map(user => (
+          <Card
+          imgUrl={imageURL(user.name)}
+          name={user.name}
+          phoneNo={user.phone}
+          mail={user.email}
+          city={user.address.city}
+          />
+        ))
+        }
+        </Row>
+    </div>
   );
 }
-
 
 export default App;
 
