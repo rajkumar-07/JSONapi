@@ -19,6 +19,11 @@ function App() {
   fetchUsers();
   },
  []);
+
+ function handleDelete(id) {
+  const updatedUsers = users.filter(user => user.id !== id);
+  setUsers(updatedUsers);
+}
   return (
     
     <div>
@@ -30,6 +35,7 @@ function App() {
           phoneNo={user.phone}
           mail={user.email}
           city={user.address.city}
+          onDelete={() => handleDelete(user.id)}
           />
         ))
         }

@@ -5,7 +5,7 @@ import phone from "../Icons/phone-call.png"
 import profile from "../Icons/profile-user.png"
 
 const Card = (props) =>{
-    const onEdit="",onDelete="";
+    const {onDelete,onEdit}=props;
     return(
         <div className="card-component">
         <img src={props.imgUrl} width="200px" height="200px"/>
