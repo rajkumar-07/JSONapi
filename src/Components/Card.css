@@ -28,6 +28,7 @@
     border:1px;
     border-radius: 5px;
     color: rgb(255, 255, 255);
+    cursor: pointer
 }
  .email{
     margin-left: 5px;
